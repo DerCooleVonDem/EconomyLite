@@ -22,7 +22,7 @@ class EconomyLiteCommand extends Command {
     {
         parent::__construct("economylite", "Use economylite", "/economylite <sub> <args>", ["el", "eco"]);
         $this->setPermission("economylite.command");
-        $this->addSubcommand(new HelpSubCommand());
+        $this->addSubcommand(new HelpSubCommand($this));
         $this->addSubcommand(new AddSubCommand());
         $this->addSubcommand(new RemoveSubCommand());
         $this->addSubcommand(new InfoSubCommand());
@@ -33,6 +33,10 @@ class EconomyLiteCommand extends Command {
 
     public function addSubcommand(EconomyLiteSubCommand $subCommand) : void {
         $this->subCommands[$subCommand->name] = $subCommand;
+    }
+
+    public function getSubcommands() : array {
+        return $this->subCommands;
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args)
