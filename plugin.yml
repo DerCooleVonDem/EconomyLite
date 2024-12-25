@@ -1,0 +1,28 @@
+---
+name: EconomyLite
+version: 0.0.1
+main: DerCooleVonDem\EconomyLite\Main
+api: 5.23.2
+src-namespace-prefix: DerCooleVonDem\EconomyLite
+permissions:
+  economylite.command:
+    default: op
+  economylite.sub.help:
+    default: op
+  economylite.sub.add:
+    default: op
+  economylite.sub.remove:
+    default: op
+  economylite.sub.info:
+    default: op
+  economylite.sub.show:
+    default: op
+  economylite.sub.delete:
+    default: op
+  economylite.sub.history:
+    default: op
+  economylite.cmd.pay:
+    default: true
+  economylite.cmd.purse:
+    default: true
+...
