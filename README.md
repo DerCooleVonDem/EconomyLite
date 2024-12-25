@@ -2,6 +2,7 @@
   <h1>EconomyLite</h1>
   <p>The simple economy plugin for stable currencys</p>
   <p>No weird formattings, no weird design choices, no UIs</p>
+  <a href="https://poggit.pmmp.io/p/EconomyLite"><img src="https://poggit.pmmp.io/shield.state/EconomyLite"></a>
 </div>
 
 ## For Developers
