@@ -2,26 +2,33 @@
 
 namespace DerCooleVonDem\EconomyLite\cmd;
 
+use DerCooleVonDem\EconomyLite\config\LanguageProvider;
 use DerCooleVonDem\EconomyLite\EconomyLite;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
+use pocketmine\console\ConsoleCommandSender;
 
 class PayCommand extends Command {
 
     public function __construct()
     {
-        parent::__construct("pay", "Pay someone", "/pay <name> <amount>");
+        parent::__construct("pay", LanguageProvider::getInstance()->tryGet("pay-cmd-description"), LanguageProvider::getInstance()->tryGet("pay-cmd-usage"));
         $this->setPermission("economylite.cmd.pay");
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
+        if($sender instanceof ConsoleCommandSender) {
+            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("pay-cmd-console"));
+            return;
+        }
+
         if(!$this->testPermission($sender)) {
             return;
         }
 
         if(count($args) < 2) {
-            $sender->sendMessage("Usage: /pay <name> <amount>");
+            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("pay-cmd-usage"));
             return;
         }
 
@@ -29,30 +36,30 @@ class PayCommand extends Command {
         $amount = array_shift($args);
 
         if(!is_numeric($amount)) {
-            $sender->sendMessage("Amount must be a number");
+            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("pay-cmd-amount-false-format"));
             return;
         }
 
         $amount = (int) $amount;
 
         if($amount < 0) {
-            $sender->sendMessage("Amount must be positive");
+            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("pay-cmd-amount-is-negative"));
             return;
         }
 
         if(!EconomyLite::hasAccount($name)) {
-            $sender->sendMessage("Player not found");
+            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("pay-cmd-not-found"));
             return;
         }
 
         $result = EconomyLite::pay($sender->getName(), $name, $amount);
 
         if(!$result) {
-            $sender->sendMessage("You don't have enough money");
+            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("pay-cmd-no-money"));
             return;
         }
 
-        $sender->sendMessage("Paid $amount to $name");
+        $sender->sendMessage(LanguageProvider::getInstance()->tryGet("pay-cmd-success", ["{AMOUNT}" => $amount, "{NAME}" => $name]));
         EconomyLite::addPaymentHistory($sender->getName(), $name, $amount);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace DerCooleVonDem\EconomyLite\cmd\sub;
 
+use DerCooleVonDem\EconomyLite\config\LanguageProvider;
 use DerCooleVonDem\EconomyLite\EconomyLite;
 use pocketmine\command\CommandSender;
 
@@ -9,13 +10,13 @@ class AddSubCommand extends EconomyLiteSubCommand {
 
     public function __construct()
     {
-        parent::__construct("add", "Adds money into the economy", "/economylite give <name> <amount>", "economylite.sub.add");
+        parent::__construct("add", LanguageProvider::getInstance()->tryGet("add-sub-description"), LanguageProvider::getInstance()->tryGet("add-sub-usage"), "economylite.sub.add");
     }
 
     public function execute(CommandSender $sender, array $args): void
     {
         if(count($args) < 2) {
-            $sender->sendMessage("Usage: /economylite give <name> <amount>");
+            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("add-sub-usage"));
             return;
         }
 
@@ -26,11 +27,11 @@ class AddSubCommand extends EconomyLiteSubCommand {
         $result = EconomyLite::addMoney($name, $amount);
 
         if(!$result) {
-            $sender->sendMessage("Amount would exceed the limit of allowed money");
+            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("add-sub-exceed-limit"));
             return;
         }
 
-        $sender->sendMessage("Added $amount to $name");
+        $sender->sendMessage(LanguageProvider::getInstance()->tryGet("add-sub-success", ["{AMOUNT}" => $amount, "{NAME}" => $name]));
         EconomyLite::addEconomyChange($sender->getName(), $amount);
         EconomyLite::addPaymentHistory("SERVER", $name, $amount);
     }

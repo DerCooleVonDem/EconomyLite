@@ -2,6 +2,7 @@
 
 namespace DerCooleVonDem\EconomyLite\cmd\sub;
 
+use DerCooleVonDem\EconomyLite\config\LanguageProvider;
 use DerCooleVonDem\EconomyLite\EconomyLite;
 use pocketmine\command\CommandSender;
 
@@ -9,13 +10,13 @@ class HistorySubCommand extends EconomyLiteSubCommand {
 
     public function __construct()
     {
-        parent::__construct("history", "Displays the payment history of given player", "/economylite history <name> [limit=100]", "economylite.sub.history");
+        parent::__construct("history", LanguageProvider::getInstance()->tryGet("history-sub-description"), LanguageProvider::getInstance()->tryGet("history-sub-usage"), "economylite.sub.history");
     }
 
     public function execute(CommandSender $sender, array $args): void
     {
         if(count($args) < 1) {
-            $sender->sendMessage("Usage: " . $this->usage);
+            $sender->sendMessage($this->usage);
             return;
         }
 
@@ -23,12 +24,12 @@ class HistorySubCommand extends EconomyLiteSubCommand {
         $limit = $args[1] ?? "100";
 
         if(!EconomyLite::hasAccount($player)) {
-            $sender->sendMessage("Player does not have an account");
+            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("history-sub-no-account"));
             return;
         }
 
         $history = EconomyLite::getPaymentHistory($player);
-        $sender->sendMessage("Payment history of " . $player . ":");
+        $sender->sendMessage(LanguageProvider::getInstance()->tryGet("history-sub-header", ["{NAME}" => $player]));
 
 
         if($limit !== null) {
@@ -37,7 +38,7 @@ class HistorySubCommand extends EconomyLiteSubCommand {
 
         foreach($history as $payment) {
             // keys: receiver, sender, money, date
-            $sender->sendMessage("(" . $payment["date"] . ") " . $payment["sender"] . " -> " . $payment["receiver"] . ": " . $payment["money"]);
+            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("history-sub-item", ["{RECEIVER}" => $payment["receiver"], "{SENDER}" => $payment["sender"], "{MONEY}" => $payment["money"], "{DATE}" => $payment["date"]]));
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace DerCooleVonDem\EconomyLite\cmd\sub;
 
+use DerCooleVonDem\EconomyLite\config\LanguageProvider;
 use DerCooleVonDem\EconomyLite\EconomyLite;
 use pocketmine\command\CommandSender;
 
@@ -9,18 +10,13 @@ class RemoveSubCommand extends EconomyLiteSubCommand {
 
     public function __construct()
     {
-        parent::__construct("remove", "Removes money from the economy", "/economylite remove <name> <amount>", "economylite.sub.remove");
+        parent::__construct("remove", LanguageProvider::getInstance()->tryGet("remove-sub-description"), LanguageProvider::getInstance()->tryGet("remove-sub-usage"), "economylite.sub.remove");
     }
 
     public function execute(CommandSender $sender, array $args): void
     {
-        if(!$sender->hasPermission($this->permission)) {
-            $sender->sendMessage("You do not have permission to use this command");
-            return;
-        }
-
         if(count($args) < 2) {
-            $sender->sendMessage("Usage: " . $this->usage);
+            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("remove-sub-usage"));
             return;
         }
 
@@ -28,13 +24,13 @@ class RemoveSubCommand extends EconomyLiteSubCommand {
         $amount = $args[1];
 
         if(!is_numeric($amount)) {
-            $sender->sendMessage("Amount must be a number");
+            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("remove-sub-amount-false-format"));
             return;
         }
 
         EconomyLite::removeMoney($name, $amount);
 
-        $sender->sendMessage("Removed $amount from $name");
+        $sender->sendMessage(LanguageProvider::getInstance()->tryGet("remove-sub-success", ["{AMOUNT}" => $amount, "{NAME}" => $name]));
         EconomyLite::addEconomyChange($sender->getName(), -$amount);
         EconomyLite::addPaymentHistory($name, "SERVER", $amount);
     }
