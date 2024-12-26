@@ -13,7 +13,6 @@ use DerCooleVonDem\EconomyLite\cmd\sub\ShowSubCommand;
 use DerCooleVonDem\EconomyLite\config\LanguageProvider;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\lang\Translatable;
 
 class EconomyLiteCommand extends Command {
 
