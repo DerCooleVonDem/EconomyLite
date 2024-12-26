@@ -2,6 +2,7 @@
 
 namespace DerCooleVonDem\EconomyLite\cmd\sub;
 
+use DerCooleVonDem\EconomyLite\config\LanguageProvider;
 use DerCooleVonDem\EconomyLite\EconomyLite;
 use pocketmine\command\CommandSender;
 
@@ -9,25 +10,25 @@ class DeleteSubCommand extends EconomyLiteSubCommand {
 
     public function __construct()
     {
-        parent::__construct("delete", "Deletes the account of a player", "/economylite delete <name>", "economylite.sub.delete");
+        parent::__construct("delete", LanguageProvider::getInstance()->tryGet("delete-sub-description"), LanguageProvider::getInstance()->tryGet("delete-sub-usage"), "economylite.sub.delete");
     }
 
     public function execute(CommandSender $sender, array $args): void
     {
         if(count($args) < 1) {
-            $sender->sendMessage("Usage: " . $this->usage);
+            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("delete-sub-usage"));
             return;
         }
 
         if(!EconomyLite::hasAccount($args[0])) {
-            $sender->sendMessage("Player does not have an account");
+            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("delete-sub-no-account"));
             return;
         }
 
         $playerMoney = EconomyLite::getMoney($args[0]);
         EconomyLite::addEconomyChange($sender->getName(), -$playerMoney);
         EconomyLite::deleteAccount($args[0]);
-        $sender->sendMessage("Deleted account of " . $args[0]);
+        $sender->sendMessage(LanguageProvider::getInstance()->tryGet("delete-sub-success", ["{NAME}" => $args[0]]));
     }
 
 }

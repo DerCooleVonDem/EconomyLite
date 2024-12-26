@@ -8,6 +8,7 @@ use DerCooleVonDem\EconomyLite\cmd\EconomyLiteCommand;
 use DerCooleVonDem\EconomyLite\cmd\PayCommand;
 use DerCooleVonDem\EconomyLite\cmd\PurseCommand;
 use DerCooleVonDem\EconomyLite\config\ConfigProvider;
+use DerCooleVonDem\EconomyLite\config\LanguageProvider;
 use DerCooleVonDem\EconomyLite\db\SqlliteProvider;
 use DerCooleVonDem\EconomyLite\event\PlayerListener;
 use pocketmine\plugin\PluginBase;
@@ -18,11 +19,14 @@ class Main extends PluginBase{
 
     public SqlLiteProvider $provider;
     public ConfigProvider $configProvider;
+    public LanguageProvider $languageProvider;
 
     protected function onEnable(): void
     {
-        $this->provider = new SqlliteProvider($this->getDataFolder());
-        $this->configProvider = new ConfigProvider($this->getDataFolder());
+        $dataFolder = $this->getDataFolder();
+        $this->provider = new SqlliteProvider($dataFolder);
+        $this->configProvider = new ConfigProvider($dataFolder);
+        $this->languageProvider = new LanguageProvider($dataFolder);
 
         $commandMap = $this->getServer()->getCommandMap();
         $commandMap->register("economylite", new EconomyLiteCommand());
