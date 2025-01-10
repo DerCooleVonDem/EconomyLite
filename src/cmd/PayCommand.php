@@ -47,19 +47,21 @@ class PayCommand extends Command {
             return;
         }
 
-        if(!EconomyLite::hasAccount($name)) {
-            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("pay-cmd-not-found"));
-            return;
-        }
+        EconomyLite::hasAccount($name)->onCompletion(function($exists) use ($sender, $name, $amount) {
+            if(!$exists) {
+                $sender->sendMessage(LanguageProvider::getInstance()->tryGet("pay-cmd-not-found"));
+                return;
+            }
 
-        $result = EconomyLite::pay($sender->getName(), $name, $amount);
+            $result = EconomyLite::pay($sender->getName(), $name, $amount);
 
-        if(!$result) {
-            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("pay-cmd-no-money"));
-            return;
-        }
+            if(!$result) {
+                $sender->sendMessage(LanguageProvider::getInstance()->tryGet("pay-cmd-no-money"));
+                return;
+            }
 
-        $sender->sendMessage(LanguageProvider::getInstance()->tryGet("pay-cmd-success", ["{AMOUNT}" => $amount, "{NAME}" => $name]));
-        EconomyLite::addPaymentHistory($sender->getName(), $name, $amount);
+            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("pay-cmd-success", ["{AMOUNT}" => $amount, "{NAME}" => $name]));
+            EconomyLite::addPaymentHistory($sender->getName(), $name, $amount);
+        }, fn() => null);
     }
 }

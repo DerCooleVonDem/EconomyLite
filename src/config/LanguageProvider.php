@@ -56,6 +56,7 @@ class LanguageProvider {
         $this->addDefault("remove-sub-usage", "/economylite remove <name> <amount>");
         $this->addDefault("remove-sub-amount-false-format", "Amount must be a number");
         $this->addDefault("remove-sub-success", "Removed {AMOUNT} from {NAME}");
+        $this->addDefault("remove-sub-no-account", "Player does not have an account");
 
         // Show Sub Command
         $this->addDefault("show-sub-description", "Shows the balance of a player");

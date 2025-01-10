@@ -1,0 +1,14 @@
+---
+database:
+  type: sqlite
+  sqlite:
+    file: economy.sqlite
+  mysql:
+    host: 127.0.0.1
+    username: root
+    password: ""
+    schema: your_schema
+  worker-limit: 1
+max-money: 100000
+start-money-if-possible: 1000
+...

@@ -1,0 +1,52 @@
+---
+add-sub-description: Adds money into the economy
+add-sub-usage: /economylite add <name> <amount>
+add-sub-exceed-limit: Amount would exceed the limit of allowed money
+add-sub-success: Added {AMOUNT} to {NAME}
+delete-sub-description: Deletes the account of a player
+delete-sub-usage: /economylite delete <name>
+delete-sub-no-account: Player does not have an account
+delete-sub-success: Deleted account of {NAME}
+help-sub-description: Help about the economylite admin commands
+help-sub-usage: /economylite help
+help-sub-header: 'EconomyLite admin commands:'
+help-sub-item: /economylite {NAME} - {DESCRIPTION} - {USAGE}
+history-sub-description: Displays the payment history of given player
+history-sub-usage: /economylite history <name> [limit=100]
+history-sub-no-account: Player does not have an account
+history-sub-header: 'Payment history of {NAME}:'
+history-sub-item: '({DATE}) {SENDER} -> {RECEIVER}: {MONEY}'
+info-sub-description: Get information about the economy
+info-sub-usage: /economylite info
+info-sub-money-in-exchange: 'Money in exchange: {MONEY}'
+info-sub-subheader: '\nRecent economy changes:'
+info-sub-change-item: ({DATE}) {PLAYER} {ACTION} {MONEY}
+remove-sub-description: Removes money from the economy
+remove-sub-usage: /economylite remove <name> <amount>
+remove-sub-amount-false-format: Amount must be a number
+remove-sub-success: Removed {AMOUNT} from {NAME}
+remove-sub-no-account: Player does not have an account
+show-sub-description: Shows the balance of a player
+show-sub-usage: /economylite show <name>
+show-sub-no-account: Player does not have an account
+show-sub-success: '{NAME} has {MONEY}'
+pay-cmd-description: Pay someone
+pay-cmd-usage: /pay <name> <amount>
+pay-cmd-console: You cannot use this command in console
+pay-cmd-amount-false-format: Amount must be a number
+pay-cmd-amount-is-negative: Amount must be positive
+pay-cmd-not-found: Player not found
+pay-cmd-no-money: You do not have enough money
+pay-cmd-success: Paid {AMOUNT} to {NAME}
+purse-cmd-description: Shows your balance
+purse-cmd-usage: /purse
+purse-cmd-no-account: You do not have an account
+purse-cmd-success: You have {MONEY}
+purse-cmd-no-history: \nNo payment history
+purse-cmd-history-header: '\nPayment history:'
+purse-cmd-history-item: '({DATE}) {SENDER} -> {RECEIVER}: {MONEY}'
+economylite-cmd-description: EconomyLite admin commands
+economylite-cmd-usage: /economylite <subcommand> [args]
+economylite-cmd-no-permission: You do not have permission to use this command
+economylite-cmd-no-subcommand: Subcommand not found or misspelled
+...

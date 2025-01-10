@@ -9,9 +9,9 @@ use pocketmine\event\player\PlayerJoinEvent;
 class PlayerListener implements Listener {
 
     public function onJoin(PlayerJoinEvent $event): void {
-        if(!EconomyLite::hasAccount($event->getPlayer()->getName())){
-            EconomyLite::createAccount($event->getPlayer()->getName());
-        }
+        EconomyLite::hasAccount($event->getPlayer()->getName())->onCompletion(function ($exists) use ($event) {
+            if(!$exists) EconomyLite::createAccount($event->getPlayer()->getName());
+        }, fn() => null);
     }
 
 }

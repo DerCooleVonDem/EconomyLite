@@ -15,15 +15,18 @@ class InfoSubCommand extends EconomyLiteSubCommand {
 
     public function execute(CommandSender $sender, array $args): void
     {
-        $sender->sendMessage(LanguageProvider::getInstance()->tryGet("info-sub-money-in-exchange", ["{MONEY}" => EconomyLite::getAllMoney()]));
+        EconomyLite::getAllMoney()->onCompletion(function ($money) use ($sender) {
+            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("info-sub-money-in-exchange", ["{MONEY}" => $money]));
+            // economy changes
+            EconomyLite::getEconomyChanges()->onCompletion(function ($changes) use ($sender) {
+                // keys = player, money, date
+                $sender->sendMessage(LanguageProvider::getInstance()->tryGet("info-sub-subheader"));
+                foreach($changes as $change) {
+                    $positiveChange = $change["money"] > 0;
+                    $sender->sendMessage(LanguageProvider::getInstance()->tryGet("info-sub-change-item", ["{PLAYER}" => $change["player"], "{MONEY}" => str_replace("-", "", $change["money"]), "{DATE}" => $change["date"], "{ACTION}" => $positiveChange ? "added" : "removed"]));
+                }
+            }, fn() => null);
+        }, fn() => null);
 
-        // economy changes
-        $changes = EconomyLite::getEconomyChanges();
-        // keys = player, money, date
-        $sender->sendMessage(LanguageProvider::getInstance()->tryGet("info-sub-subheader"));
-        foreach($changes as $change) {
-            $positiveChange = $change["money"] > 0;
-            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("info-sub-change-item", ["{PLAYER}" => $change["player"], "{MONEY}" => $change["money"], "{DATE}" => $change["date"], "{ACTION}" => $positiveChange ? "added" : "removed"]));
-        }
     }
 }
