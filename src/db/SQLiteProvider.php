@@ -8,6 +8,12 @@ use DerCooleVonDem\EconomyLite\Main;
 use pocketmine\promise\Promise;
 use pocketmine\promise\PromiseResolver;
 
+/**
+ * Class SQLiteProvider
+ *
+ * Provides functionality to interact with the SQLite database, managing operations related to economy,
+ * payment history, and economy changes for individual players.
+ */
 class SQLiteProvider {
 
     private Main $plugin;

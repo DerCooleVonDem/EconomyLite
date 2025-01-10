@@ -125,6 +125,9 @@ The plugin includes a configuration file (`config.yml`), where you can modify:
 - **Starting Money**: Set the default balance for new players.
 - **Maximum Economy Cap**: The total cap for money in circulation.
 
+## Library's in use
+- **libasynql** https://github.com/poggit/libasynql
+
 ## Disclaimer
 This plugin is currently in active development and is released for feedback. It is not recommended for production use without proper testing in your environment.
 **Use at your own risk.**

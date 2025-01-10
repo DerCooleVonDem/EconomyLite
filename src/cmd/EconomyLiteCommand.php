@@ -14,6 +14,18 @@ use DerCooleVonDem\EconomyLite\config\LanguageProvider;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 
+/**
+ * Represents the EconomyLite command, which serves as a base command handler
+ * for managing sub-commands related to the EconomyLite plugin.
+ *
+ * This class is designed for executing various sub-commands, such as adding,
+ * removing, and displaying economy-related information. Sub-commands are
+ * registered during the instantiation of this class and can be dynamically
+ * executed based on the input arguments.
+ *
+ * Permissions are validated before executing a sub-command to ensure proper
+ * access control for the command sender.
+ */
 class EconomyLiteCommand extends Command {
 
     public array $subCommands = [];
