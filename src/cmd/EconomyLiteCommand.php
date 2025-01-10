@@ -13,6 +13,7 @@ use DerCooleVonDem\EconomyLite\cmd\sub\ShowSubCommand;
 use DerCooleVonDem\EconomyLite\config\LanguageProvider;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
+use pocketmine\plugin\PluginOwnedTrait;
 
 /**
  * Represents the EconomyLite command, which serves as a base command handler
@@ -27,6 +28,8 @@ use pocketmine\command\CommandSender;
  * access control for the command sender.
  */
 class EconomyLiteCommand extends Command {
+
+    use PluginOwnedTrait;
 
     public array $subCommands = [];
 

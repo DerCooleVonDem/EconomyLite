@@ -7,8 +7,11 @@ use DerCooleVonDem\EconomyLite\EconomyLite;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\console\ConsoleCommandSender;
+use pocketmine\plugin\PluginOwnedTrait;
 
 class PayCommand extends Command {
+
+    use PluginOwnedTrait;
 
     public function __construct()
     {

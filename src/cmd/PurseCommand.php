@@ -6,8 +6,11 @@ use DerCooleVonDem\EconomyLite\config\LanguageProvider;
 use DerCooleVonDem\EconomyLite\EconomyLite;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
+use pocketmine\plugin\PluginOwnedTrait;
 
 class PurseCommand extends Command {
+
+    use PluginOwnedTrait;
 
     public function __construct()
     {
