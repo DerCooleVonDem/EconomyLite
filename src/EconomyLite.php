@@ -30,15 +30,14 @@ class EconomyLite {
 
     public static function pay(string $originUsername, string $targetUsername, int $amount) {
         $sqlite = Main::getInstance()->provider;
-        $originBalance = $sqlite->getMoney($originUsername);
+        $sqlite->getMoney($originUsername)->onCompletion(function($balance) use ($sqlite, $amount, $originUsername, $targetUsername) {
+            if($balance < $amount) {
+                return;
+            }
 
-        if($originBalance < $amount) {
-            return false;
-        }
-
-        $sqlite->removeMoney($originUsername, $amount);
-        $sqlite->addMoney($targetUsername, $amount);
-        return true;
+            $sqlite->removeMoney($originUsername, $amount);
+            $sqlite->addMoney($targetUsername, $amount);
+        }, fn() => null);
     }
 
     public static function getAllMoney(): Promise {

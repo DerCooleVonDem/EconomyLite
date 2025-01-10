@@ -23,22 +23,22 @@ class HistorySubCommand extends EconomyLiteSubCommand {
         $player = $args[0];
         $limit = $args[1] ?? "100";
 
-        if(!EconomyLite::hasAccount($player)) {
-            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("history-sub-no-account"));
-            return;
-        }
-
-        $history = EconomyLite::getPaymentHistory($player);
-        $sender->sendMessage(LanguageProvider::getInstance()->tryGet("history-sub-header", ["{NAME}" => $player]));
+        EconomyLite::hasAccount($player)->onCompletion(function ($exists) use ($player, $sender, $limit) {
+            if($exists) {
+                EconomyLite::getPaymentHistory($player)->onCompletion(function ($history) use ($sender, $player, $limit) {
+                    $sender->sendMessage(LanguageProvider::getInstance()->tryGet("history-sub-header", ["{NAME}" => $player]));
 
 
-        if($limit !== null) {
-            $history = array_slice($history, 0, $limit);
-        }
+                    if($limit !== null) {
+                        $history = array_slice($history, 0, $limit);
+                    }
 
-        foreach($history as $payment) {
-            // keys: receiver, sender, money, date
-            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("history-sub-item", ["{RECEIVER}" => $payment["receiver"], "{SENDER}" => $payment["sender"], "{MONEY}" => $payment["money"], "{DATE}" => $payment["date"]]));
-        }
+                    foreach($history as $payment) {
+                        // keys: receiver, sender, money, date
+                        $sender->sendMessage(LanguageProvider::getInstance()->tryGet("history-sub-item", ["{RECEIVER}" => $payment["receiver"], "{SENDER}" => $payment["sender"], "{MONEY}" => $payment["money"], "{DATE}" => $payment["date"]]));
+                    }
+                }, fn() => null);
+            }
+        }, fn() => null);
     }
 }
