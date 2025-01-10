@@ -4,6 +4,7 @@ version: 0.1.0
 main: DerCooleVonDem\EconomyLite\Main
 api: 5.0.0
 src-namespace-prefix: DerCooleVonDem\EconomyLite
+load: POSTWORLD
 permissions:
   economylite.command:
     default: op

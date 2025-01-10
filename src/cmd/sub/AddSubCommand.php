@@ -24,12 +24,7 @@ class AddSubCommand extends EconomyLiteSubCommand {
         $amount = $args[1];
 
         // add to economy
-        $result = EconomyLite::addMoney($name, $amount);
-
-        if(!$result) {
-            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("add-sub-exceed-limit"));
-            return;
-        }
+        EconomyLite::addMoney($name, $amount);
 
         $sender->sendMessage(LanguageProvider::getInstance()->tryGet("add-sub-success", ["{AMOUNT}" => $amount, "{NAME}" => $name]));
         EconomyLite::addEconomyChange($sender->getName(), $amount);

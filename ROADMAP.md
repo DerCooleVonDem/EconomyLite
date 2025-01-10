@@ -38,20 +38,6 @@ My focus is on providing server owners and players with more tools to enhance th
     - Enable/Disable taxes globally or for specific transaction types.
     - Configure tax rates and exemptions for specific player groups.
 
-### 3. **Dynamic Economy System**
-- **Description**:
-    - Introduce inflation and deflation mechanics to simulate a dynamic economy.
-    - Adjust transaction fees, maximum player balances, or currency values based on total money in circulation.
-    - Include configuration options to enable or disable this feature for servers that prefer stability.
-
-- **Benefits**:
-    - Ensures the economy remains balanced over time.
-    - Creates interesting challenges for admins and players to adapt their strategies.
-
-- **Planned Features**:
-    - Configurable thresholds for inflation/deflation triggers.
-    - Notifications for admins when major economic shifts occur.
-
 ### 4. **Leaderboards**
 - **Description**:
     - Add a leaderboard system displaying the richest players on the server.
@@ -154,7 +140,7 @@ My focus is on providing server owners and players with more tools to enhance th
 ## Development Stages
 To implement these features, the following development stages have been identified:
 1. **Core System Improvements**:
-    - Prepare internal architecture to support advanced features like multi-currency, analytics, and dynamic economies.
+    - Prepare internal architecture to support advanced features like multi-currency, analytics.
 
 2. **Player-Focused Additions**:
     - Introduce player-facing features like bank accounts, leaderboards, and fines.

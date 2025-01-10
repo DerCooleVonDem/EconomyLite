@@ -21,11 +21,15 @@ class ShowSubCommand extends EconomyLiteSubCommand {
         }
         $player = $args[0];
 
-        if(!EconomyLite::hasAccount($player)) {
-            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("show-sub-no-account"));
-            return;
-        }
+        EconomyLite::hasAccount($player)->onCompletion(function ($exists) use ($player, $sender) {
+            if(!$exists) {
+                $sender->sendMessage(LanguageProvider::getInstance()->tryGet("show-sub-no-account"));
+                return;
+            }
 
-        $sender->sendMessage(LanguageProvider::getInstance()->tryGet("show-sub-success", ["{NAME}" => $player, "{MONEY}" => EconomyLite::getMoney($player)]));
+            EconomyLite::getMoney($player)->onCompletion(function ($money) use ($sender, $player) {
+                $sender->sendMessage(LanguageProvider::getInstance()->tryGet("show-sub-success", ["{NAME}" => $player, "{MONEY}" => $money]));
+            }, fn() => null );
+        }, fn() => null );
     }
 }

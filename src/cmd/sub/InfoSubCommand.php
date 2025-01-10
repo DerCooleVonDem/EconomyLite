@@ -15,7 +15,9 @@ class InfoSubCommand extends EconomyLiteSubCommand {
 
     public function execute(CommandSender $sender, array $args): void
     {
-        $sender->sendMessage(LanguageProvider::getInstance()->tryGet("info-sub-money-in-exchange", ["{MONEY}" => EconomyLite::getAllMoney()]));
+        EconomyLite::getAllMoney()->onCompletion(function ($money) use ($sender) {
+            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("info-sub-money-in-exchange", ["{MONEY}" => $money]));
+        }, fn() => null);
 
         // economy changes
         $changes = EconomyLite::getEconomyChanges();
