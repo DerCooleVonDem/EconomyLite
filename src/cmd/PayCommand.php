@@ -4,6 +4,7 @@ namespace DerCooleVonDem\EconomyLite\cmd;
 
 use DerCooleVonDem\EconomyLite\config\LanguageProvider;
 use DerCooleVonDem\EconomyLite\EconomyLite;
+use DerCooleVonDem\EconomyLite\Main;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\console\ConsoleCommandSender;
@@ -17,6 +18,7 @@ class PayCommand extends Command {
     {
         parent::__construct("pay", LanguageProvider::getInstance()->tryGet("pay-cmd-description"), LanguageProvider::getInstance()->tryGet("pay-cmd-usage"));
         $this->setPermission("economylite.cmd.pay");
+        $this->owningPlugin = Main::getInstance();
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args)
