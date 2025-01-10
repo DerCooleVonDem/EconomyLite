@@ -20,15 +20,18 @@ class DeleteSubCommand extends EconomyLiteSubCommand {
             return;
         }
 
-        if(!EconomyLite::hasAccount($args[0])) {
-            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("delete-sub-no-account"));
-            return;
-        }
+        EconomyLite::hasAccount($args[0])->onCompletion(function ($exists) use ($args, $sender) {
+            if(!$exists) {
+                $sender->sendMessage(LanguageProvider::getInstance()->tryGet("delete-sub-no-account"));
+                return;
+            }
 
-        $playerMoney = EconomyLite::getMoney($args[0]);
-        EconomyLite::addEconomyChange($sender->getName(), -$playerMoney);
-        EconomyLite::deleteAccount($args[0]);
-        $sender->sendMessage(LanguageProvider::getInstance()->tryGet("delete-sub-success", ["{NAME}" => $args[0]]));
+            EconomyLite::getMoney($args[0])->onCompletion(function ($playerMoney) use ($sender, $args) {
+                EconomyLite::addEconomyChange($sender->getName(), -$playerMoney);
+                EconomyLite::deleteAccount($args[0]);
+                $sender->sendMessage(LanguageProvider::getInstance()->tryGet("delete-sub-success", ["{NAME}" => $args[0]]));
+            }, fn() => null);
+        }, fn() => null);
     }
 
 }

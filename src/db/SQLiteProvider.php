@@ -111,7 +111,7 @@ class SQLiteProvider {
     }
 
     public function deleteAccount(string $player): void {
-        $this->database->executeChange("data.economy.delete", ["player" => $player]);
+        $this->database->executeChange("data.economy.delete_player", ["player" => $player]);
         // Controversial implementation, needs change! // $this->database->executeChange("data.payment_history.delete", ["player" => $player]);
     }
 

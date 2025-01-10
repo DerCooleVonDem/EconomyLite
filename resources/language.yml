@@ -25,6 +25,7 @@ remove-sub-description: Removes money from the economy
 remove-sub-usage: /economylite remove <name> <amount>
 remove-sub-amount-false-format: Amount must be a number
 remove-sub-success: Removed {AMOUNT} from {NAME}
+remove-sub-no-account: Player does not have an account
 show-sub-description: Shows the balance of a player
 show-sub-usage: /economylite show <name>
 show-sub-no-account: Player does not have an account

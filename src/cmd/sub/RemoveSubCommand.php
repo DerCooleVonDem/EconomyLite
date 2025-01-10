@@ -28,10 +28,17 @@ class RemoveSubCommand extends EconomyLiteSubCommand {
             return;
         }
 
-        EconomyLite::removeMoney($name, $amount);
+        EconomyLite::hasAccount($name)->onCompletion(function ($exists) use ($name, $sender, $amount) {
+            if($exists) {
+                EconomyLite::removeMoney($name, $amount);
 
-        $sender->sendMessage(LanguageProvider::getInstance()->tryGet("remove-sub-success", ["{AMOUNT}" => $amount, "{NAME}" => $name]));
-        EconomyLite::addEconomyChange($sender->getName(), -$amount);
-        EconomyLite::addPaymentHistory($name, "SERVER", $amount);
+                $sender->sendMessage(LanguageProvider::getInstance()->tryGet("remove-sub-success", ["{AMOUNT}" => $amount, "{NAME}" => $name]));
+                EconomyLite::addEconomyChange($sender->getName(), -$amount);
+                EconomyLite::addPaymentHistory($name, "SERVER", $amount);
+                return;
+            }
+
+            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("remove-sub-no-account"));
+        }, fn() => null);
     }
 }

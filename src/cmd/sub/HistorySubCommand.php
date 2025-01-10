@@ -38,7 +38,9 @@ class HistorySubCommand extends EconomyLiteSubCommand {
                         $sender->sendMessage(LanguageProvider::getInstance()->tryGet("history-sub-item", ["{RECEIVER}" => $payment["receiver"], "{SENDER}" => $payment["sender"], "{MONEY}" => $payment["money"], "{DATE}" => $payment["date"]]));
                     }
                 }, fn() => null);
+                return;
             }
+            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("history-sub-no-account"));
         }, fn() => null);
     }
 }
