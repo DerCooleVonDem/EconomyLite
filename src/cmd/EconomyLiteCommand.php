@@ -11,8 +11,10 @@ use DerCooleVonDem\EconomyLite\cmd\sub\InfoSubCommand;
 use DerCooleVonDem\EconomyLite\cmd\sub\RemoveSubCommand;
 use DerCooleVonDem\EconomyLite\cmd\sub\ShowSubCommand;
 use DerCooleVonDem\EconomyLite\config\LanguageProvider;
+use DerCooleVonDem\EconomyLite\Main;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
+use pocketmine\plugin\PluginOwnedTrait;
 
 /**
  * Represents the EconomyLite command, which serves as a base command handler
@@ -28,6 +30,8 @@ use pocketmine\command\CommandSender;
  */
 class EconomyLiteCommand extends Command {
 
+    use PluginOwnedTrait;
+
     public array $subCommands = [];
 
     public function __construct()
@@ -41,6 +45,7 @@ class EconomyLiteCommand extends Command {
         $this->addSubcommand(new ShowSubCommand());
         $this->addSubcommand(new DeleteSubCommand());
         $this->addSubcommand(new HistorySubCommand());
+        $this->owningPlugin = Main::getInstance();
     }
 
     public function addSubcommand(EconomyLiteSubCommand $subCommand) : void {

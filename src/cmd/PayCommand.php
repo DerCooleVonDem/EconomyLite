@@ -4,16 +4,21 @@ namespace DerCooleVonDem\EconomyLite\cmd;
 
 use DerCooleVonDem\EconomyLite\config\LanguageProvider;
 use DerCooleVonDem\EconomyLite\EconomyLite;
+use DerCooleVonDem\EconomyLite\Main;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\console\ConsoleCommandSender;
+use pocketmine\plugin\PluginOwnedTrait;
 
 class PayCommand extends Command {
+
+    use PluginOwnedTrait;
 
     public function __construct()
     {
         parent::__construct("pay", LanguageProvider::getInstance()->tryGet("pay-cmd-description"), LanguageProvider::getInstance()->tryGet("pay-cmd-usage"));
         $this->setPermission("economylite.cmd.pay");
+        $this->owningPlugin = Main::getInstance();
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args)
@@ -53,15 +58,16 @@ class PayCommand extends Command {
                 return;
             }
 
-            $result = EconomyLite::pay($sender->getName(), $name, $amount);
+            EconomyLite::getMoney($sender->getName())->onCompletion(function($senderMoney) use ($sender, $amount, $name) {
+                if($senderMoney < $amount) {
+                    $sender->sendMessage(LanguageProvider::getInstance()->tryGet("pay-cmd-no-money"));
+                }
 
-            if(!$result) {
-                $sender->sendMessage(LanguageProvider::getInstance()->tryGet("pay-cmd-no-money"));
-                return;
-            }
+                EconomyLite::pay($sender->getName(), $name, $amount);
 
-            $sender->sendMessage(LanguageProvider::getInstance()->tryGet("pay-cmd-success", ["{AMOUNT}" => $amount, "{NAME}" => $name]));
-            EconomyLite::addPaymentHistory($sender->getName(), $name, $amount);
+                $sender->sendMessage(LanguageProvider::getInstance()->tryGet("pay-cmd-success", ["{AMOUNT}" => $amount, "{NAME}" => $name]));
+                EconomyLite::addPaymentHistory($sender->getName(), $name, $amount);
+            }, fn() => null);
         }, fn() => null);
     }
 }

@@ -4,15 +4,20 @@ namespace DerCooleVonDem\EconomyLite\cmd;
 
 use DerCooleVonDem\EconomyLite\config\LanguageProvider;
 use DerCooleVonDem\EconomyLite\EconomyLite;
+use DerCooleVonDem\EconomyLite\Main;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
+use pocketmine\plugin\PluginOwnedTrait;
 
 class PurseCommand extends Command {
+
+    use PluginOwnedTrait;
 
     public function __construct()
     {
         parent::__construct("purse", LanguageProvider::getInstance()->tryGet("purse-cmd-description"), LanguageProvider::getInstance()->tryGet("purse-cmd-usage"));
         $this->setPermission("economylite.cmd.purse");
+        $this->owningPlugin = Main::getInstance();
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args)
