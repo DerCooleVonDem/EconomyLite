@@ -62,6 +62,7 @@ class PayCommand extends Command implements PluginOwned {
             EconomyLite::getMoney($sender->getName())->onCompletion(function($senderMoney) use ($sender, $amount, $name) {
                 if($senderMoney < $amount) {
                     $sender->sendMessage(LanguageProvider::getInstance()->tryGet("pay-cmd-no-money"));
+                    return;
                 }
 
                 EconomyLite::pay($sender->getName(), $name, $amount);
