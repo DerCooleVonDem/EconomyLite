@@ -15,6 +15,8 @@ use pocketmine\plugin\PluginBase;
 
 class Main extends PluginBase{
 
+    private const PLUGIN_NAME = "EconomyLite";
+
     private static Main $instance;
 
     public SQLiteProvider $provider;
@@ -29,12 +31,12 @@ class Main extends PluginBase{
         $dataFolder = $this->getDataFolder();
         $this->configProvider = new ConfigProvider($dataFolder);
         $this->languageProvider = new LanguageProvider($dataFolder);
-        $this->provider = new SqliteProvider($dataFolder);
+        $this->provider = new SqliteProvider();
 
         $commandMap = $this->getServer()->getCommandMap();
-        $commandMap->register("economylite", new EconomyLiteCommand());
-        $commandMap->register("pay", new PayCommand());
-        $commandMap->register("purse", new PurseCommand());
+        $commandMap->register(self::PLUGIN_NAME, new EconomyLiteCommand());
+        $commandMap->register(self::PLUGIN_NAME, new PayCommand()); // Its not clear why the fallback needs to be that, but sure okay
+        $commandMap->register(self::PLUGIN_NAME, new PurseCommand()); // hm
 
         // register event listener
         $pluginManager = $this->getServer()->getPluginManager();
