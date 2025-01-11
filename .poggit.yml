@@ -4,6 +4,7 @@ branches:
 - main
 projects:
   EconomyLite:
+    icon: icon.png
     path: ""
     libs:
       - src: poggit/libasynql/libasynql
