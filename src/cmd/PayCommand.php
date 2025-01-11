@@ -8,9 +8,10 @@ use DerCooleVonDem\EconomyLite\Main;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\console\ConsoleCommandSender;
+use pocketmine\plugin\PluginOwned;
 use pocketmine\plugin\PluginOwnedTrait;
 
-class PayCommand extends Command {
+class PayCommand extends Command implements PluginOwned {
 
     use PluginOwnedTrait;
 

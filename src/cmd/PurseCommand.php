@@ -7,9 +7,10 @@ use DerCooleVonDem\EconomyLite\EconomyLite;
 use DerCooleVonDem\EconomyLite\Main;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
+use pocketmine\plugin\PluginOwned;
 use pocketmine\plugin\PluginOwnedTrait;
 
-class PurseCommand extends Command {
+class PurseCommand extends Command implements PluginOwned {
 
     use PluginOwnedTrait;
 

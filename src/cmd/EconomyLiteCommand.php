@@ -14,6 +14,7 @@ use DerCooleVonDem\EconomyLite\config\LanguageProvider;
 use DerCooleVonDem\EconomyLite\Main;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
+use pocketmine\plugin\PluginOwned;
 use pocketmine\plugin\PluginOwnedTrait;
 
 /**
@@ -28,12 +29,17 @@ use pocketmine\plugin\PluginOwnedTrait;
  * Permissions are validated before executing a sub-command to ensure proper
  * access control for the command sender.
  */
-class EconomyLiteCommand extends Command {
+class EconomyLiteCommand extends Command implements PluginOwned {
 
     use PluginOwnedTrait;
 
     public array $subCommands = [];
 
+    /**
+     * Constructor method for initializing the EconomyLite command.
+     *
+     * @return void
+     */
     public function __construct()
     {
         parent::__construct("economylite", LanguageProvider::getInstance()->tryGet("economylite-cmd-description"), LanguageProvider::getInstance()->tryGet("economylite-cmd-usage"), ["el", "eco"]);
