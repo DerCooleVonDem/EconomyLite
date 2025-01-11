@@ -48,7 +48,7 @@ class LanguageProvider {
         $this->addDefault("info-sub-description", "Get information about the economy");
         $this->addDefault("info-sub-usage", "/economylite info");
         $this->addDefault("info-sub-money-in-exchange", "Money in exchange: {MONEY}");
-        $this->addDefault("info-sub-subheader", "\\nRecent economy changes:");
+        $this->addDefault("info-sub-subheader", "%BR%Recent economy changes:");
         $this->addDefault("info-sub-change-item", "({DATE}) {PLAYER} {ACTION} {MONEY}");
 
         // Remove Sub Command
@@ -79,9 +79,10 @@ class LanguageProvider {
         $this->addDefault("purse-cmd-usage", "/purse");
         $this->addDefault("purse-cmd-no-account", "You do not have an account");
         $this->addDefault("purse-cmd-success", "You have {MONEY}");
-        $this->addDefault("purse-cmd-no-history", "\\nNo payment history");
-        $this->addDefault("purse-cmd-history-header", "\\nPayment history:");
+        $this->addDefault("purse-cmd-no-history", "%BR%No payment history");
+        $this->addDefault("purse-cmd-history-header", "%BR%Payment history:");
         $this->addDefault("purse-cmd-history-item", "({DATE}) {SENDER} -> {RECEIVER}: {MONEY}");
+        $this->addDefault("purse-cmd-history-recent-sign", " (RECENT)");
 
         // EconomyLite Command
         $this->addDefault("economylite-cmd-description", "EconomyLite admin commands");
@@ -103,7 +104,11 @@ class LanguageProvider {
             $unprepared = str_replace($key, $value, $unprepared);
         }
 
-        return $unprepared;
+
+        // Replace {BR} with a line break
+        $prepared = str_replace("%BR%", "\n", $unprepared);
+
+        return $prepared;
     }
 
     /**

@@ -161,13 +161,13 @@ class EconomyLite {
 
         // check if it is possible to add this amount of money
         $maxMoney = Main::getInstance()->configProvider->get("max-money");
-        $allMoney = self::getAllMoney();
+        self::getAllMoney()->onCompletion(function($allMoney) use ($maxMoney, $startMoneyAmount, $name) {
+            // add as much money as possible until the start money amount is reached
+            $moneyToAdd = min($startMoneyAmount, $maxMoney - $allMoney);
+            self::addMoney($name, $moneyToAdd);
 
-        // add as much money as possible until the start money amount is reached
-        $moneyToAdd = min($startMoneyAmount, $maxMoney - $allMoney);
-        self::addMoney($name, $moneyToAdd);
-
-        self::addPaymentHistory("SERVER", $name, $moneyToAdd);
-        self::addEconomyChange("SERVER (AUTO)", $moneyToAdd);
+            self::addPaymentHistory("SERVER", $name, $moneyToAdd);
+            self::addEconomyChange("SERVER (AUTO)", $moneyToAdd);
+        }, fn() => null);
     }
 }

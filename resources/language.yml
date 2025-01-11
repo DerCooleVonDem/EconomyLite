@@ -19,7 +19,7 @@ history-sub-item: '({DATE}) {SENDER} -> {RECEIVER}: {MONEY}'
 info-sub-description: Get information about the economy
 info-sub-usage: /economylite info
 info-sub-money-in-exchange: 'Money in exchange: {MONEY}'
-info-sub-subheader: '\nRecent economy changes:'
+info-sub-subheader: '%BR%Recent economy changes:'
 info-sub-change-item: ({DATE}) {PLAYER} {ACTION} {MONEY}
 remove-sub-description: Removes money from the economy
 remove-sub-usage: /economylite remove <name> <amount>
@@ -42,9 +42,10 @@ purse-cmd-description: Shows your balance
 purse-cmd-usage: /purse
 purse-cmd-no-account: You do not have an account
 purse-cmd-success: You have {MONEY}
-purse-cmd-no-history: \nNo payment history
-purse-cmd-history-header: '\nPayment history:'
+purse-cmd-no-history: '%BR%No payment history'
+purse-cmd-history-header: '%BR%Payment history:'
 purse-cmd-history-item: '({DATE}) {SENDER} -> {RECEIVER}: {MONEY}'
+purse-cmd-history-recent-sign: ' (RECENT)'
 economylite-cmd-description: EconomyLite admin commands
 economylite-cmd-usage: /economylite <subcommand> [args]
 economylite-cmd-no-permission: You do not have permission to use this command
